@@ -24,15 +24,13 @@ export default function Home() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Gestion de la visibilité du header au scroll
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsHeaderVisible(false); // Disparaît en descendant
+        setIsHeaderVisible(false);
       } else {
-        setIsHeaderVisible(true);  // Réapparaît en remontant
+        setIsHeaderVisible(true);
       }
       setLastScrollY(currentScrollY);
 
-      // Gestion de la section collection
       const collectionElement = document.getElementById("collection-section");
       if (collectionElement) {
         const rect = collectionElement.getBoundingClientRect();
@@ -66,7 +64,7 @@ export default function Home() {
   return (
     <div className="min-h-screen text-[#ffffff] relative overflow-x-hidden w-full" style={{ backgroundColor: "transparent" }}>
 
-      {/* --- HEADER / NAVIGATION BAR (DISPARAÎT AU SCROLL) --- */}
+      {/* --- HEADER / NAVIGATION BAR --- */}
       <header className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-12 py-6 bg-gradient-to-b from-black/80 to-transparent transition-transform duration-300 ${isHeaderVisible ? "translate-y-0" : "-translate-y-full"}`}>
         <div className="flex items-center gap-6">
           <button
@@ -81,13 +79,13 @@ export default function Home() {
           </button>
         </div>
 
-        {/* --- BARRE DE RECHERCHE AU MILIEU TOUJOURS OUVERTE --- */}
-        <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 border border-white/10 rounded-sm w-[240px] md:w-[320px]">
+        {/* --- BARRE DE RECHERCHE AU MILIEU --- */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 border border-white/10 rounded-sm w-[200px] sm:w-[240px] md:w-[320px]">
           <Search size={18} strokeWidth={1.5} className="text-white shrink-0" />
           <input
             type="text"
             placeholder="RECHERCHER..."
-            className="bg-transparent border-none outline-none text-xs tracking-widest w-full placeholder-white text-white focus:ring-0 uppercase font-sans"
+            className="bg-transparent border-none outline-none text-[11px] md:text-xs tracking-widest w-full placeholder-white text-white focus:ring-0 uppercase font-sans"
             style={{ color: "#ffffff" }}
           />
         </div>
@@ -114,7 +112,7 @@ export default function Home() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 left-0 h-full w-[90vw] md:w-[50vw] bg-black/40 backdrop-blur-2xl z-[100] flex flex-col"
+              className="fixed top-0 left-0 h-full w-[85vw] md:w-[50vw] bg-black/40 backdrop-blur-2xl z-[100] flex flex-col"
             >
               <div className="relative z-[120] px-6 md:px-12 pt-12 pb-6 flex items-center gap-6 w-full">
                 <motion.button 
@@ -163,7 +161,7 @@ export default function Home() {
       />
 
       {/* --- HERO SECTION --- */}
-      <section className="relative z-0 h-screen w-full flex flex-col items-center justify-center pt-28">
+      <section className="relative z-0 h-screen w-full flex flex-col items-center justify-center pt-28 px-4">
         <motion.div
           animate={{
             opacity: isHeroHidden ? 0 : 1,
@@ -171,10 +169,12 @@ export default function Home() {
             y: isHeroHidden ? -60 : 0
           }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="relative flex flex-col items-center text-center px-4 w-full"
+          className="relative flex flex-col items-center text-center w-full"
         >
-          <h1 className="font-serif text-[12rem] md:text-[30rem] leading-none tracking-widest text-white/80 mb-6 uppercase">Balenciaga</h1>
-          <p className="font-sans text-xl md:text-4xl text-white tracking-[0.3em] uppercase mb-16 max-w-4xl drop-shadow-[0_4px_10px_rgba(0,0,0,0.95)] font-semibold leading-tight"></p>
+          {/* Titre : exactement [30rem] d'origine sur PC, et réduit uniquement sur mobile */}
+          <h1 className="font-serif text-[5rem] sm:text-[8rem] lg:text-[30rem] leading-none tracking-widest text-white/80 mb-6 uppercase">
+            Balenciaga
+          </h1>
           <button onClick={toggleCollection} className="group font-sans text-xs md:text-sm tracking-[0.2em] uppercase bg-black/40 backdrop-blur-md text-white px-12 py-5 hover:bg-white hover:text-black transition-all duration-500 border-none flex items-center gap-4 cursor-pointer font-bold">
             {showCollection ? (
               <>Masquer la collection <ArrowUp size={30} className="group-hover:-translate-y-2 transition-transform duration-300" /></>
@@ -185,7 +185,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* --- COLLECTION SECTION (TRANSPARENTE) --- */}
+      {/* --- COLLECTION SECTION --- */}
       {showCollection && (
         <motion.section 
           id="collection-section" 
@@ -202,25 +202,25 @@ export default function Home() {
             </div>
           </div>
 
-          {/* GRILLE DE PRODUITS */}
+          {/* GRILLE DE PRODUITS : 4 colonnes exactes d'origine sur PC (lg:grid-cols-4), et 1/2 colonnes adaptées sur mobile */}
           <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-8 mt-12">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-20 md:gap-x-8 md:gap-y-24">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 lg:gap-x-8 lg:gap-y-24">
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="group cursor-pointer flex flex-col items-center"
+                  className="group cursor-pointer flex flex-col items-center w-full"
                 >
                   <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/40 flex flex-col justify-between">
-                    <div className="flex-1 flex items-center justify-center p-6">
+                    <div className="flex-1 flex items-center justify-center p-4 lg:p-6">
                       <img
                         src={product.image}
                         alt={product.name}
                         className="object-contain w-full h-full opacity-90 group-hover:opacity-100 group-hover:scale-108 transition-all duration-500"
                       />
                     </div>
-                    <div className="w-full bg-black/75 backdrop-blur-md py-4 px-3 text-center">
-                      <h3 className="font-serif text-xs md:text-sm tracking-[0.15em] text-white uppercase mb-1" style={{ color: "#ffffff" }}>{product.name}</h3>
-                      <p className="font-sans text-xs md:text-sm text-white tracking-wider font-semibold" style={{ color: "#ffffff" }}>{product.price}</p>
+                    <div className="w-full bg-black/75 backdrop-blur-md py-3 lg:py-4 px-2 lg:px-3 text-center">
+                      <h3 className="font-serif text-[10px] lg:text-sm tracking-[0.15em] text-white uppercase mb-1 truncate" style={{ color: "#ffffff" }}>{product.name}</h3>
+                      <p className="font-sans text-[10px] lg:text-sm text-white tracking-wider font-semibold" style={{ color: "#ffffff" }}>{product.price}</p>
                     </div>
                   </div>
                 </div>
@@ -231,7 +231,7 @@ export default function Home() {
       )}
 
       {/* --- FOOTER HARMONISÉ --- */}
-      <footer className="relative z-25 w-full pt-32 pb-24 px-8 md:px-16 lg:px-24 mt-[17.5vh]" style={{ backgroundColor: "transparent", color: "#ffffff" }}>
+      <footer className="relative z-25 w-full pt-32 pb-24 px-6 md:px-16 lg:px-24 mt-[17.5vh]" style={{ backgroundColor: "transparent", color: "#ffffff" }}>
         <div className="max-w-[1600px] mx-auto">
 
           {/* SECTION SUPÉRIEURE : NEWSLETTER ET CONTACTS */}
@@ -242,14 +242,14 @@ export default function Home() {
               <p className="text-xs uppercase tracking-widest !text-white leading-relaxed" style={{ color: "#ffffff" }}>
                 Abonnez-vous pour recevoir les actualités exclusives et les lancements de la Maison.
               </p>
-              <div className="flex items-center bg-black/40 backdrop-blur-md px-4 py-3 border border-white/20 rounded-sm">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 items-stretch sm:items-center bg-black/40 backdrop-blur-md px-4 py-3 border border-white/20 rounded-sm">
                 <input
                   type="email"
                   placeholder="VOTRE EMAIL"
                   className="bg-transparent border-none outline-none text-xs tracking-widest w-full placeholder-white !text-white focus:ring-0 uppercase"
                   style={{ color: "#ffffff" }}
                 />
-                <button className="text-xs uppercase tracking-widest font-bold hover:opacity-80 transition-opacity bg-[#222222] px-6 py-2 ml-2 rounded-sm border border-white/30 !text-white" style={{ backgroundColor: "#222222", color: "#ffffff" }}>S'inscrire</button>
+                <button className="text-xs uppercase tracking-widest font-bold hover:opacity-80 transition-opacity bg-[#222222] px-6 py-3 sm:py-2 sm:ml-2 rounded-sm border border-white/30 !text-white shrink-0" style={{ backgroundColor: "#222222", color: "#ffffff" }}>S'inscrire</button>
               </div>
             </div>
 
@@ -276,7 +276,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* GRILLE PRINCIPALE DU FOOTER (4 COLONNES) */}
+          {/* GRILLE PRINCIPALE DU FOOTER : 4 colonnes d'origine sur PC (md:grid-cols-4) */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24">
             
             {/* Colonne 1 : Service client */}
@@ -322,7 +322,7 @@ export default function Home() {
             </div>
 
             {/* Colonne 4 : Boutiques & Signature */}
-            <div className="flex flex-col justify-between gap-8">
+            <div className="flex flex-col justify-between gap-8 col-span-2 md:col-span-1">
               <div className="flex flex-col gap-4">
                 <h4 className="font-serif text-xs md:text-sm tracking-[0.2em] uppercase mb-2 font-bold !text-white" style={{ color: "#ffffff" }}>Boutiques</h4>
                 <div className="flex flex-col gap-3 text-[10px] uppercase tracking-widest !text-white" style={{ color: "#ffffff" }}>
@@ -340,10 +340,10 @@ export default function Home() {
 
           {/* BAS DE PAGE : COPYRIGHT & LÉGAL */}
           <div className="flex flex-col md:flex-row justify-between items-center pt-12 pb-8 gap-4 border-t border-white/25">
-            <p className="text-[10px] uppercase tracking-widest !text-white" style={{ color: "#ffffff" }}>
+            <p className="text-[10px] uppercase tracking-widest !text-white text-center md:text-left" style={{ color: "#ffffff" }}>
               © 2026 L'ESSENTIEL STUDIO. TOUS DROITS RÉSERVÉS.
             </p>
-            <div className="flex gap-6 text-[10px] uppercase tracking-widest !text-white" style={{ color: "#ffffff" }}>
+            <div className="flex flex-wrap justify-center gap-6 text-[10px] uppercase tracking-widest !text-white" style={{ color: "#ffffff" }}>
               <a href="#" className="no-underline hover:text-gray-300 transition-colors !text-white" style={{ color: "#ffffff" }}>Mentions légales</a>
               <a href="#" className="no-underline hover:text-gray-300 transition-colors !text-white" style={{ color: "#ffffff" }}>Confidentialité</a>
               <a href="#" className="no-underline hover:text-gray-300 transition-colors !text-white" style={{ color: "#ffffff" }}>Cookies</a>
